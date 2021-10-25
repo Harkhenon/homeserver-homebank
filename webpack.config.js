@@ -10,9 +10,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 // Config pour le devServer
 const host = 'localhost';
-const port = 8080;
-
-const devMode = process.env.NODE_ENV !== 'production';
+const port = 8082;
 
 // Config de Webpack
 module.exports = {
@@ -30,19 +28,14 @@ module.exports = {
   // Points d'entrée pour le travail de Webpack
   entry: {
     app: [
-      // Styles
       './src/styles/index.scss',
-      // JS
       './src/index.js',
     ],
   },
   // Sortie
   output: {
-    // Nom du bundle
     filename: '[name].js',
-    // Nom du bundle vendors si l'option d'optimisation / splitChunks est activée
     chunkFilename: 'vendors.js',
-    // Cible des bundles
     path: path.resolve(__dirname, 'public'),
     publicPath: '/',
   },
@@ -60,7 +53,7 @@ module.exports = {
           ecma: 6,
         },
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new OptimizeCSSAssetsPlugin(),
     ],
   },
   // Modules
@@ -84,9 +77,7 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          // style-loader ou fichier
-          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-          // Chargement du CSS
+          MiniCssExtractPlugin.loader,
           'css-loader',
           {
             loader: 'postcss-loader',
@@ -100,15 +91,14 @@ module.exports = {
       },
       // Images
       {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: 'assets/',
-            },
-          },
-        ],
+        test: /\.(png|svg|jpe?g|gif)$/,
+        use: [{
+          loader: 'img-loader',
+          options: {
+            name: '[name]-[hash].[ext]',
+            outputPath: 'img/',
+          }
+        }],
       },
       // fonts
       {
@@ -137,8 +127,14 @@ module.exports = {
   plugins: [
     // Permet de prendre le index.html de src comme base pour le fichier de dist/
     new HtmlWebPackPlugin({
+      title: 'Homebank',
       template: './src/index.html',
       filename: './index.html',
+      'meta': {
+        'viewport': 'width=device-width, initial-scale=1, shrink-to-fit=no',
+        'charset': 'utf-8',
+        'theme-color': '#4285f4'
+      }
     }),
     // Permet d'exporter les styles CSS dans un fichier css de dist/
     new MiniCssExtractPlugin({

@@ -10,7 +10,7 @@ import reducer from './reducer';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // all axios can be used, shown in axios documentation
-const client = axios.create({
+export const axiosConfigured = axios.create({
   baseURL: backendUrl,
   responseType: 'json',
   headers: {
