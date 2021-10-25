@@ -1,3 +1,5 @@
+// Think to add some postcss plugins
+
 const webpack = require('webpack');
 // Node import
 const path = require('path');
