@@ -1,0 +1,15 @@
+html {
+    & body {
+        & #root {
+            & main {
+                height: auto;
+                background-color: white;
+            
+                & a.card:hover {
+                    border-bottom: 1px solid red ;
+                    transition: border 0.3s;
+                }
+            }
+        }
+    }
+}

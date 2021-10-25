@@ -1,0 +1,17 @@
+header {
+    height: 200px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2em;
+    color: black;
+    background-image: url('src/styles/img/comptabilite.jpg');
+    background-position: center;
+    background-size: auto;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+    & p {
+        font-size: 0.5em;
+    }
+}
