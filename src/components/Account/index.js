@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router';
 import {
     Breadcrumb,
     Button,
     Card,
+    Container,
     Header as Text,
     Icon
 } from 'semantic-ui-react';
@@ -11,31 +12,40 @@ import {
 import Header from 'src/components/Parts/Header';
 import Footer from 'src/components/Parts/Footer';
 import { Link } from 'react-router-dom';
+import ItemForm from 'src/containers/Account/ItemForm';
 
 const Account = (props) => {
 
     const {
         currentAccount,
         accountsWithTypes,
+        setCurrentAccount
     } = props;
 
     const history = useHistory();
 
-    accountsWithTypes ?? history.push('/');
-    currentAccount ?? history.push('/');
-
-    const account = accountsWithTypes[currentAccount - 1];
+    if(currentAccount === null) {
+        history.push('/');
+        return null;
+    }
 
     const calcTotal = (elements) => {
         let sum = 0;
-        elements.map(function (element) {
+        elements.map((element) => {
             sum += element.amount;
+            return null;
         })
 
-        return sum;
+        return sum.toFixed(2);
     }
 
-    const total = calcTotal(account.incomings) - calcTotal(account.expenses) - calcTotal(account.regular_fees);
+    if(accountsWithTypes !== null) {
+        if(currentAccount !== accountsWithTypes[currentAccount.id - 1]) {
+            setCurrentAccount(accountsWithTypes[currentAccount.id - 1]);
+        }
+    }
+
+    const total = calcTotal(currentAccount.incomings) - calcTotal(currentAccount.expenses) - calcTotal(currentAccount.regular_fees);
 
     return (
         <>
@@ -49,10 +59,26 @@ const Account = (props) => {
                     </Breadcrumb.Section>
                     <Breadcrumb.Divider icon="arrow right"/>
                     <Breadcrumb.Section>
-                        Compte {account.name.charAt(0).toUpperCase() + account.name.slice(1)}
+                        Compte {currentAccount.name.charAt(0).toUpperCase() + currentAccount.name.slice(1)}
                     </Breadcrumb.Section>
                 </Breadcrumb>
-                    <Text as="h1" textAlign="center">{account.name.charAt(0).toUpperCase() + account.name.slice(1)}</Text>
+                    <Text as="h1" textAlign="center">
+                        {currentAccount.name.charAt(0).toUpperCase() + currentAccount.name.slice(1)}
+                    </Text>
+                    <Container centered={true} textAlign="center" className="contains">
+                        <Button as={Link} to="/account/incomings" labelPosition="left" icon color="green">
+                            <Icon name="money"/>
+                            Voir les recettes
+                        </Button>
+                        <Button as={Link} to="/account/regularfees" labelPosition="left" icon color="orange">
+                            <Icon name="money"/>
+                            Voir les dépenses régulières
+                        </Button>
+                        <Button as={Link} to="/account/expenses" labelPosition="left" icon color="red">
+                        <Icon name="money"/>
+                            Voir les dépenses
+                        </Button>
+                    </Container>
                     <Card.Group centered>
                     <Card>
                             <Card.Header as={Text} icon>
@@ -61,12 +87,12 @@ const Account = (props) => {
                             </Card.Header>
                             <Card.Content>
                                 <Text as="p" size="huge" textAlign="center">
-                                    {account.expenses.length}
+                                    {currentAccount.expenses.length}
                                 </Text>
                             </Card.Content>
                             <Card.Content>
                                 <Text as="p" size="huge" textAlign="center">
-                                    {calcTotal(account.expenses)} €
+                                    {calcTotal(currentAccount.expenses)} €
                                 </Text>
                             </Card.Content>
                         </Card>
@@ -77,12 +103,12 @@ const Account = (props) => {
                             </Card.Header>
                             <Card.Content>
                                 <Text as="p" size="huge" textAlign="center">
-                                    {account.incomings.length}
+                                    {currentAccount.incomings.length}
                                 </Text>
                             </Card.Content>
                             <Card.Content>
                                 <Text as="p" size="huge" textAlign="center">
-                                    {calcTotal(account.incomings)} €
+                                    {calcTotal(currentAccount.incomings)} €
                                 </Text>
                             </Card.Content>
                         </Card>
@@ -93,12 +119,12 @@ const Account = (props) => {
                             </Card.Header>
                             <Card.Content>
                                 <Text as="p" size="huge" textAlign="center">
-                                    {account.regular_fees.length}
+                                    {currentAccount.regular_fees.length}
                                 </Text>
                             </Card.Content>
                             <Card.Content>
                                 <Text as="p" size="huge" textAlign="center">
-                                    {calcTotal(account.regular_fees)} €
+                                    {calcTotal(currentAccount.regular_fees)} €
                                 </Text>
                             </Card.Content>
                         </Card>
@@ -112,12 +138,13 @@ const Account = (props) => {
                             <Text as="h1" textAlign="center">
                                 {
                                     total < 0 
-                                    && <Text color="red" as="span" size="tiny">{total}</Text>
-                                    || <Text color="green" as="span" size="tiny">{total}</Text>
+                                    && <Text color="red" as="span" size="tiny">{total.toFixed(2)}</Text>
+                                    || <Text color="green" as="span" size="tiny">{total.toFixed(2)}</Text>
                                 } €
                             </Text>
                         </Card.Content>
                     </Card>
+                    <ItemForm accountId={currentAccount.id} />
                 </main>
             <Footer />
         </>

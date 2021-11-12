@@ -1,32 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Card, Dimmer, Header as Text, Icon, Loader } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-
-import { axiosConfigured } from 'src/store';
 
 const AccountCard = (props) => {
 
     const {
-        getAccountsWithTypes,
         setCurrentAccount,
-        currentAccount,
         accountsWithTypes
     } = props;
 
-    useEffect(() => {
-        if(accountsWithTypes === null) {
-            axiosConfigured.get('/api/bank/accounts')
-            .then((result) => {
-                getAccountsWithTypes(result.data);
-            })
-            .catch((error) => {
-                getAccountsWithTypes(error.data);
-            });
-        }
-    });
-
     const handleClick = e => {
-        setCurrentAccount(e.currentTarget.id);
+        setCurrentAccount(accountsWithTypes[e.currentTarget.id - 1]);
     }
 
     const calcAmount = (amounts) => {
@@ -40,41 +24,42 @@ const AccountCard = (props) => {
     }
 
     const page = () => {
-        const { accountsWithTypes } = props;
+        try {
+            const { accountsWithTypes } = props;
 
-        if (accountsWithTypes !== null) {
-            let cards = accountsWithTypes.map(element => {
+                let cards = accountsWithTypes.map(element => {
 
-                // Calcul du total sur le compte
-                const total = (calcAmount(element.incomings) - calcAmount(element.expenses)) - calcAmount(element.regular_fees);
+                    // Calcul du total sur le compte
+                    const total = (calcAmount(element.incomings) - calcAmount(element.expenses)) - calcAmount(element.regular_fees);
 
-                return (
-                    <Card as={Link} to="/account" key={element.id} id={element.id} onClick={handleClick}>
-                        <Card.Header>
-                            <Text as="h1" icon>
-                                {element.type.name === "ad" && <Icon name="font" />}
-                                {element.type.name === "esse" && <Icon name="credit card outline" />}
-                                {element.type.name === "velit" && <Icon name="money bill alternate outline" />}
-                                {element.name}
-                            </Text>
-                        </Card.Header>
-                        <Card.Content>
-                            <Text as="p" className="amount">
-                                {total} €
-                            </Text>
-                        </Card.Content>
-                    </Card>
+                    return (
+                        <Card as={Link} to="/account" key={element.id} id={element.id} onClick={handleClick}>
+                            <Card.Header>
+                                <Text as="h1" icon>
+                                    {element.type.name === "livreta" && <Icon name="font" />}
+                                    {element.type.name === "ccp" && <Icon name="credit card outline" />}
+                                    {element.type.name === "assurancevie" && <Icon name="life ring" />}
+                                    {element.name}
+                                </Text>
+                            </Card.Header>
+                            <Card.Content>
+                                <Text as="p" className="amount">
+                                    {total.toFixed(2)} €
+                                </Text>
+                            </Card.Content>
+                        </Card>
+                    )
+                }
                 )
-            }
-            )
             return cards;
-        }
 
-        return (
-            <Dimmer active>
-                <Loader size="huge" />
-            </Dimmer>
-        );   
+        } catch(e) {
+            return (
+                <Dimmer active>
+                    <Loader size="huge" />
+                </Dimmer>
+            );   
+        }
     }
 
     return (

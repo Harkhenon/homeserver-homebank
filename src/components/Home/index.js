@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Header from '../Parts/Header';
 import Footer from '../Parts/Footer';
 import './Home.scss';
 import {
     Card,
-    Select,
     Header as Text,
     Icon,
     Label,
@@ -22,8 +21,15 @@ const Home = (props) => {
         getAccountsWithTypes,
         setCurrentAccount,
         currentAccount,
-        accountsWithTypes
+        accountsWithTypes,
+        hash
     } = props;
+
+    useEffect(() => {
+        if(accountsWithTypes === null || hash === null) {
+            getAccountsWithTypes();
+        }
+    }); 
 
     const monthNames = ["january", "february", "march", "april", "may", "june",
     "july", "august", "september", "october", "november", "december"
