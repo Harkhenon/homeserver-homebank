@@ -21,7 +21,7 @@ import { getAccountsWithTypes, setCurrentAccount } from '../../store/reducer';
 const mapStateToProps = (state, ownProps) => ({
     moove_type: state.moove_type ?? "",
     moove_name: state.moove_name ?? null,
-    moove_amount: state.moove_amount ?? "",
+    moove_amount: state.moove_amount ?? 0,
     moove_description: state.moove_description ?? "",
     form_errors: state.form_errors ?? null,
     accountsWithTypes: state.accountsWithTypes ?? null,

@@ -3,15 +3,9 @@ import { connect } from 'react-redux';
 
 
 // == Import : local
-import Mooves from 'src/components/Mooves';
-import {
-    controlFormInput,
-    toggleVisibility,
-    getAccountsWithTypes,
-    setCurrentMoove,
-    setCurrentMooveId,
-    toggleLoading
-} from 'src/store/reducer';
+import MooveForm from 'src/components/Mooves/MooveForm';
+import { controlFormInput } from 'src/store/reducer';
+
 
 /* === State (données) ===
 * - mapStateToProps retroune un objet de props pour le composant de présentation
@@ -21,14 +15,11 @@ import {
 * Pas de data à transmettre ? const mapStateToProps = null;
 */
 const mapStateToProps = (state, ownProps) => ({
-    name: state.name ?? null,
-    amount: state.amount ?? null,
     currentAccount: state.currentAccount ?? null,
     accountsWithTypes: state.accountsWithTypes ?? null,
-    visibility: state.visibility ?? null,
-    currentMoove: state.currentMoove ?? null,
-    currentMooveId: state.currentMooveId ?? null,
-    loading: state.loading ?? null,
+    name: state.name ?? null,
+    amount: state.amount ?? null,
+    comment: state.comment ?? null,
 });
 
 
@@ -40,29 +31,24 @@ const mapStateToProps = (state, ownProps) => ({
 * Pas de disptach à transmettre ? const mapDispatchToProps = {};
 */
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    controlFormInput: (input, value) => (dispatch(controlFormInput(input, value))),
-    toggleVisibility: () => (dispatch(toggleVisibility())),
-    getAccountsWithTypes: () => (dispatch(getAccountsWithTypes())),
-    setCurrentMoove: (currentMoove) => (dispatch(setCurrentMoove(currentMoove))),
-    setCurrentMooveId: (mooveId) => (dispatch(setCurrentMooveId(mooveId))),
-    toggleLoading: () => (dispatch(toggleLoading())),  
+    controlFormInput: (name, value) => (dispatch(controlFormInput(name, value)))
 });
 
 
 // Container
-const MoovesContainer = connect(
+const MooveFormContainer = connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Mooves);
+)(MooveForm);
 
 
 // == Export
-export default MoovesContainer;
+export default MooveFormContainer;
 
 
 /* = export à la volée
 export default connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Mooves);
+)(MooveForm);
 */

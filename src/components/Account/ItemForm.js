@@ -6,6 +6,7 @@ import {
   Header as Text,
   Message
 } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 import { axiosConfigured } from 'src/store';
 
@@ -21,8 +22,6 @@ const ItemForm = (props) => {
     form_errors,
     accountId,
     getAccountsWithTypes,
-    setCurrentAccount,
-    accountsWithTypes,
   } = props;
 
   toast.configure();
@@ -43,7 +42,10 @@ const ItemForm = (props) => {
     .then(response => {
       toast.success('Mouvement créé');
       getAccountsWithTypes();
-      setCurrentAccount(accountsWithTypes[accountId - 1]);
+      controlFormInput("moove_type", undefined);
+      controlFormInput("moove_name", undefined);
+      controlFormInput("moove_amount", undefined);
+      controlFormInput("moove_description", undefined);
       controlFormErrors(null);
     })
     .catch((error) => {
@@ -92,29 +94,29 @@ const ItemForm = (props) => {
                 placeholder="Selectionnez un mouvement"
                 name="moove_type"
                 options={[
-                    { key: "expense", value: "expense", text: "Dépense" },
-                    { key: "regular_fee", value: "regular_fee", text: "Dépense régulière" },
-                    { key: "incoming", value: "incoming", text: "Recette" },
+                    { key: "expenses", value: "expenses", text: "Dépense" },
+                    { key: "regular_fees", value: "regular_fees", text: "Dépense régulière" },
+                    { key: "incomings", value: "incomings", text: "Recette" },
                 ]}
-                value={moove_type}
+                value={moove_type ?? ""}
                 />
               <Form.Input
                 type="number"
                 name="moove_amount"
-                value={moove_amount}
+                value={moove_amount ?? ""}
                 label="Montant de l'opération"
                 onChange={handleChange}
               />
               <Form.Input 
                 type="text"
                 name="moove_name"
-                value={moove_name}
+                value={moove_name ?? ""}
                 label="Libellé de l'opération"
                 onChange={handleChange}
               />
               <Form.TextArea
                 name="moove_description"
-                value={moove_description}
+                value={moove_description ?? ""}
                 label="Commentaire"
                 onChange={handleChange}
               />
@@ -131,6 +133,30 @@ const ItemForm = (props) => {
         </Card>
       </>
   )
+}
+
+ItemForm.defaultProps = {
+  controlFormInput: null,
+  controlFormErrors: null,
+  moove_type: "",
+  moove_name: "",
+  moove_amount: 0,
+  moove_description: "",
+  form_errors: null,
+  accountId: null,
+  getAccountsWithTypes: null,
+}
+
+ItemForm.propTypes = {
+  controlFormInput: PropTypes.func,
+  controlFormErrors: PropTypes.func,
+  moove_type: PropTypes.string,
+  moove_name: PropTypes.string,
+  moove_amount: PropTypes.number,
+  moove_description: PropTypes.string,
+  form_errors: PropTypes.array,
+  accountId: PropTypes.number,
+  getAccountsWithTypes: PropTypes.func,
 }
 
 export default ItemForm;
