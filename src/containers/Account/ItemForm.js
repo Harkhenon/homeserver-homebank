@@ -3,8 +3,12 @@ import { connect } from 'react-redux';
 
 
 // == Import : local
-import Account from 'src/components/Account';
-import { setCurrentAccount } from '../../store/reducer';
+import ItemForm from 'src/components/Account/ItemForm';
+import {
+    controlFormInput,
+    controlFormErrors
+} from 'src/store/reducer'
+import { getAccountsWithTypes, setCurrentAccount } from '../../store/reducer';
 
 
 /* === State (données) ===
@@ -15,9 +19,12 @@ import { setCurrentAccount } from '../../store/reducer';
 * Pas de data à transmettre ? const mapStateToProps = null;
 */
 const mapStateToProps = (state, ownProps) => ({
-    currentAccount: state.currentAccount ?? null,
+    moove_type: state.moove_type ?? "",
+    moove_name: state.moove_name ?? null,
+    moove_amount: state.moove_amount ?? 0,
+    moove_description: state.moove_description ?? "",
+    form_errors: state.form_errors ?? null,
     accountsWithTypes: state.accountsWithTypes ?? null,
-    hash: state.hash ?? null,
 });
 
 
@@ -29,24 +36,27 @@ const mapStateToProps = (state, ownProps) => ({
 * Pas de disptach à transmettre ? const mapDispatchToProps = {};
 */
 const mapDispatchToProps = (dispatch, ownProps) => ({
+    controlFormInput: (key, value) => dispatch(controlFormInput(key, value)),
+    controlFormErrors: (errors) => dispatch(controlFormErrors(errors)),
+    getAccountsWithTypes: () => dispatch(getAccountsWithTypes()),
     setCurrentAccount: (account) => (dispatch(setCurrentAccount(account))),
 });
 
 
 // Container
-const AccountContainer = connect(
+const ItemFormContainer = connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Account);
+)(ItemForm);
 
 
 // == Export
-export default AccountContainer;
+export default ItemFormContainer;
 
 
 /* = export à la volée
 export default connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Account);
+)(ItemForm);
 */

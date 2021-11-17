@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 
 // == Import : local
-import Account from 'src/components/Account';
-import { setCurrentAccount } from '../../store/reducer';
+import MooveForm from 'src/components/Mooves/MooveForm';
+import { controlFormInput } from 'src/store/reducer';
 
 
 /* === State (données) ===
@@ -17,7 +17,9 @@ import { setCurrentAccount } from '../../store/reducer';
 const mapStateToProps = (state, ownProps) => ({
     currentAccount: state.currentAccount ?? null,
     accountsWithTypes: state.accountsWithTypes ?? null,
-    hash: state.hash ?? null,
+    name: state.name ?? null,
+    amount: state.amount ?? null,
+    comment: state.comment ?? null,
 });
 
 
@@ -29,24 +31,24 @@ const mapStateToProps = (state, ownProps) => ({
 * Pas de disptach à transmettre ? const mapDispatchToProps = {};
 */
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    setCurrentAccount: (account) => (dispatch(setCurrentAccount(account))),
+    controlFormInput: (name, value) => (dispatch(controlFormInput(name, value)))
 });
 
 
 // Container
-const AccountContainer = connect(
+const MooveFormContainer = connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Account);
+)(MooveForm);
 
 
 // == Export
-export default AccountContainer;
+export default MooveFormContainer;
 
 
 /* = export à la volée
 export default connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Account);
+)(MooveForm);
 */

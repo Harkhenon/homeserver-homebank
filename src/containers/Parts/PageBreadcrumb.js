@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 
 
 // == Import : local
-import Account from 'src/components/Account';
-import { setCurrentAccount } from '../../store/reducer';
+import PageBreadcrumb from 'src/components/Parts/PageBreadcrumb';
 
 
 /* === State (données) ===
@@ -15,9 +14,8 @@ import { setCurrentAccount } from '../../store/reducer';
 * Pas de data à transmettre ? const mapStateToProps = null;
 */
 const mapStateToProps = (state, ownProps) => ({
-    currentAccount: state.currentAccount ?? null,
     accountsWithTypes: state.accountsWithTypes ?? null,
-    hash: state.hash ?? null,
+    currentAccount: state.currentAccount ?? null,
 });
 
 
@@ -29,24 +27,23 @@ const mapStateToProps = (state, ownProps) => ({
 * Pas de disptach à transmettre ? const mapDispatchToProps = {};
 */
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    setCurrentAccount: (account) => (dispatch(setCurrentAccount(account))),
 });
 
 
 // Container
-const AccountContainer = connect(
+const PageBreadcrumbContainer = connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Account);
+)(PageBreadcrumb);
 
 
 // == Export
-export default AccountContainer;
+export default PageBreadcrumbContainer;
 
 
 /* = export à la volée
 export default connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Account);
+)(PageBreadcrumb);
 */

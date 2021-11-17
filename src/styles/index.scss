@@ -8,16 +8,12 @@
     font-family: 'Rubik', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body > #root {
+body #root {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     font-size: 14px;
-
-    & main {
-        padding: 15px;
-    }
 
     & .amount {
         font-size: 4em;
@@ -25,6 +21,95 @@ body > #root {
 
     & #home-resume {
         text-align: center;
-        margin-top: 20px;
+        margin: 20px 0 20px 0;
+        justify-content: space-around;
+
+        & .card {
+            max-width: 90%;
+        }
     }
+
+    & .contains {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    & .ui.segments {
+        border: none;
+        box-shadow: none;
+    }
+
+    & div.item {
+        & div.extra {
+            margin-bottom: 20px;
+        }
+        & > div.content {
+            margin: 20px 0 20px 0;
+            & > div.ui.circular.segment {
+                display: inline-block;
+            }
+        }
+    }
+
+    & .ui.circular.segment {
+        border-radius: 50%;
+        min-height: 50px;
+        min-width: 50px;
+        line-height: 3.5em;
+    }
+
+    & .ui.buttons {
+        width: 100%;
+    }
+
+    & .ui.icon.header {
+        padding: 10px 0 10px 0;
+    }
+
+    & .ui.fluid {
+        max-width: 95%;
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    & textarea {
+        max-width: 2000px;
+    }
+
+
+        
+    & main {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        box-sizing: border-box;
+    }
+
+    & .ui.breadcrumb {
+        margin: 25px;
+    }
+}
+
+.ui.modals {
+    max-width: 100vw;
+    justify-items: center;
+    margin: 0;
+    padding: 0;
+
+    & .ui.modal {
+        max-width: 85%;
+        position: relative;
+        
+            & > .content {
+            width: auto;
+        }
+    }
+}
+
+.ui.form textarea {
+    resize: none;
+    height: auto;
+    max-width: calc(100% - 20px);
+    padding: 10px;
+    margin: 0;
 }

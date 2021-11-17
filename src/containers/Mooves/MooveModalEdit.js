@@ -3,8 +3,14 @@ import { connect } from 'react-redux';
 
 
 // == Import : local
-import Account from 'src/components/Account';
-import { setCurrentAccount } from '../../store/reducer';
+import MooveModalEdit from 'src/components/Mooves/MooveModalEdit';
+import {
+    toggleVisibility,
+    setCurrentMoove,
+    controlFormInput,
+    getAccountsWithTypes,
+    toggleLoading,
+} from 'src/store/reducer';
 
 
 /* === State (données) ===
@@ -15,9 +21,14 @@ import { setCurrentAccount } from '../../store/reducer';
 * Pas de data à transmettre ? const mapStateToProps = null;
 */
 const mapStateToProps = (state, ownProps) => ({
-    currentAccount: state.currentAccount ?? null,
+    visibility: state.visibility ?? null,
     accountsWithTypes: state.accountsWithTypes ?? null,
-    hash: state.hash ?? null,
+    currentAccount: state.currentAccount ?? null,
+    currentMoove: state.currentMoove ?? null,
+    name: state.name ?? null,
+    amount: state.amount ?? null,
+    comment: state.comment ?? null,
+    loading: state.loading ?? null,
 });
 
 
@@ -29,24 +40,28 @@ const mapStateToProps = (state, ownProps) => ({
 * Pas de disptach à transmettre ? const mapDispatchToProps = {};
 */
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    setCurrentAccount: (account) => (dispatch(setCurrentAccount(account))),
+    toggleVisibility: () => (dispatch(toggleVisibility())),
+    setCurrentMoove: (currentMoove) => (dispatch(setCurrentMoove(currentMoove))),
+    controlFormInput: (name, value) => (dispatch(controlFormInput(name, value))),
+    getAccountsWithTypes: () => (dispatch(getAccountsWithTypes())),
+    toggleLoading: () => (dispatch(toggleLoading())),
 });
 
 
 // Container
-const AccountContainer = connect(
+const MooveModalEditContainer = connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Account);
+)(MooveModalEdit);
 
 
 // == Export
-export default AccountContainer;
+export default MooveModalEditContainer;
 
 
 /* = export à la volée
 export default connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Account);
+)(MooveModalEdit);
 */

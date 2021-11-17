@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 
 // == Import : local
-import Account from 'src/components/Account';
-import { setCurrentAccount } from '../../store/reducer';
+import AccountCard from 'src/components/Home/AccountCard';
+import { setCurrentAccount, getAccountsWithTypes } from 'src/store/reducer';
 
 
 /* === State (données) ===
@@ -15,9 +15,8 @@ import { setCurrentAccount } from '../../store/reducer';
 * Pas de data à transmettre ? const mapStateToProps = null;
 */
 const mapStateToProps = (state, ownProps) => ({
-    currentAccount: state.currentAccount ?? null,
     accountsWithTypes: state.accountsWithTypes ?? null,
-    hash: state.hash ?? null,
+    currentAccount: state.currentAccount ?? null,
 });
 
 
@@ -29,24 +28,25 @@ const mapStateToProps = (state, ownProps) => ({
 * Pas de disptach à transmettre ? const mapDispatchToProps = {};
 */
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    setCurrentAccount: (account) => (dispatch(setCurrentAccount(account))),
+    setCurrentAccount: (id) => dispatch(setCurrentAccount(id)),
+    getAccountsWithTypes: () => dispatch(getAccountsWithTypes()),
 });
 
 
 // Container
-const AccountContainer = connect(
+const AccountCardContainer = connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Account);
+)(AccountCard);
 
 
 // == Export
-export default AccountContainer;
+export default AccountCardContainer;
 
 
 /* = export à la volée
 export default connect(
 mapStateToProps,
 mapDispatchToProps,
-)(Account);
+)(AccountCard);
 */

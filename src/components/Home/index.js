@@ -1,29 +1,19 @@
 import React from 'react';
-
-import Header from '../Parts/Header';
-import Footer from '../Parts/Footer';
-import './Home.scss';
 import {
     Card,
-    Select,
     Header as Text,
     Icon,
     Label,
     Form,
 } from 'semantic-ui-react';
 
-import AccountCard from 'src/components/Home/AccountCard';
+import './Home.scss';
+import AccountCard from 'src/containers/Home/AccountCard';
 import { Link } from 'react-router-dom';
+import Header from '../Parts/Header';
+import Footer from '../Parts/Footer';
 
-
-const Home = (props) => {
-
-    const {
-        getAccountsWithTypes,
-        setCurrentAccount,
-        currentAccount,
-        accountsWithTypes
-    } = props;
+const Home = () => {
 
     const monthNames = ["january", "february", "march", "april", "may", "june",
     "july", "august", "september", "october", "november", "december"
@@ -51,12 +41,7 @@ const Home = (props) => {
                         <Label color="green"><Icon name="money bill alternate outline"/> Assurance-vie</Label>
                     </Text>
                     <Card.Group id="home-resume">
-                        <AccountCard
-                            getAccountsWithTypes={getAccountsWithTypes}
-                            setCurrentAccount={setCurrentAccount}
-                            currentAccount={currentAccount}
-                            accountsWithTypes={accountsWithTypes}
-                        />
+                        <AccountCard />
                     </Card.Group>
                 </main>
             <Footer />
