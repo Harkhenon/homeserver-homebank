@@ -3,6 +3,7 @@ import { stateToStorage } from 'src/utility/stateToStorage';
 const initialState = {
     visibility: false,
     loading: false,
+    lang: "fr"
 }
 
 const TOGGLE_VISIBILITY = "TOGGLE_VISIBILITY";

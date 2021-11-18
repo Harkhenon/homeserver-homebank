@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 // == Import : local
 import Account from 'src/components/Account';
-import { setCurrentAccount } from '../../store/reducer';
+import { setCurrentAccount, controlFormInput } from '../../store/reducer';
 
 
 /* === State (données) ===
@@ -18,6 +18,7 @@ const mapStateToProps = (state, ownProps) => ({
     currentAccount: state.currentAccount ?? null,
     accountsWithTypes: state.accountsWithTypes ?? null,
     hash: state.hash ?? null,
+    lang: state.lang ?? null,
 });
 
 
@@ -30,6 +31,7 @@ const mapStateToProps = (state, ownProps) => ({
 */
 const mapDispatchToProps = (dispatch, ownProps) => ({
     setCurrentAccount: (account) => (dispatch(setCurrentAccount(account))),
+    controlFormInput: (name, value) => (dispatch(controlFormInput(name, value))),
 });
 
 

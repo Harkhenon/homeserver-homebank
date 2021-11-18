@@ -19,6 +19,7 @@ import {
 const mapStateToProps = (state, ownProps) => ({
     accountsWithTypes: state.accountsWithTypes ?? null,
     currentAccount: state.currentAccount ?? null,
+    lang: state.lang ?? null,
 });
 
 

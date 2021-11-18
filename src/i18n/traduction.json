@@ -1,0 +1,26 @@
+{
+    "fr": {
+        "regular_fees": "dépenses régulières",
+        "regularfees": "dépenses régulières",
+        "incomings": "recettes",
+        "expenses": "dépenses",
+        "account": "compte",
+        "january": "janvier",
+        "february": "février",
+        "march": "mars",
+        "april": "avril",
+        "may": "mai",
+        "june": "juin",
+        "july": "juillet",
+        "august": "août",
+        "september": "septembre",
+        "october": "octobre",
+        "november": "novembre",
+        "december": "décembre",
+        "account_settings_title": "Paramètres du compte",
+        "settings": "paramètres",
+        "settings_name_label": "nom du compte",
+        "danger_zone": "zone dangereuse",
+        "save_modifications": "enregistrer les modifications"
+    }
+}

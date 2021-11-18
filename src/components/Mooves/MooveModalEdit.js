@@ -11,7 +11,7 @@ import {toast, ToastContainer } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 import { axiosConfigured } from 'src/store';
-import './Mooves.scss';
+import './sass/Mooves.scss';
 
 const MooveModalEdit = (props) => {
     toast.configure()

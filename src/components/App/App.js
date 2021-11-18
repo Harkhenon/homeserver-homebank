@@ -6,8 +6,9 @@ import Home from 'src/containers/Home';
 import Account from 'src/containers/Account';
 import NotFoundFallback from 'src/components/Errors/NotFoundFallback';
 import Mooves from 'src/containers/Mooves';
-import './App.scss';
-// import MooveForm from 'src/containers/Mooves/MooveForm';
+import Settings from 'src/containers/Settings';
+
+import './sass/App.scss';
 
 const App = (props) => {
 
@@ -17,13 +18,13 @@ const App = (props) => {
     if(accountsWithTypes === null) {
       getAccountsWithTypes();
     }
-  })
-
+  });
 
   return (
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/account/:type/:id" component={Mooves} />
+        <Route path="/account/settings" component={Settings} />
+        <Route path={"/account/:type/:id"} component={Mooves} />
         <Route path="/account/:type" component={Mooves}/>
         <Route path="/account" component={Account}/>
         <Route component={NotFoundFallback} />

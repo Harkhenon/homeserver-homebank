@@ -14,17 +14,32 @@ import Footer from 'src/components/Parts/Footer';
 import { Link } from 'react-router-dom';
 import ItemForm from 'src/containers/Account/ItemForm';
 import PageBreadcrumb from 'src/containers/Parts/PageBreadcrumb';
+import { ucfirst } from 'src/utility/PolyfillPhp';
+import { traduceTo } from 'src/i18n/Internationalization';
 
 const Account = (props) => {
 
     const history = useHistory();
 
     try {
+
+        /** Component props */
         const {
             accountsWithTypes,
-            currentAccount
+            currentAccount,
+            lang,
+            controlFormInput
         } = props;
 
+        /** Get the current account */
+        const account = accountsWithTypes[currentAccount];
+        
+        /**
+         * Returns mooves's sum
+         * (incomings, expenses ou regular fees)
+         * @param {object} elements 
+         * @returns {number} Mooves's sum
+         */
         const calcTotal = (elements) => {
             let sum = 0;
             elements.map((element) => {
@@ -35,79 +50,65 @@ const Account = (props) => {
             return sum.toFixed(2);
         }
 
-        const account = accountsWithTypes[currentAccount];
+        /**
+         * Sendind Settings components props
+         * before calling it (Populate form)
+         * 
+         * @returns {void}
+         */
+        const setSettingsData = () => {
+            controlFormInput("name", account.name);
+        }
 
+        /** Account total sums */
         const total = calcTotal(account.incomings) - calcTotal(account.expenses) - calcTotal(account.regular_fees);
 
         return (
             <>
                 <Header />
                     <main>
-                    <PageBreadcrumb />
+                    <Container>
+                        <PageBreadcrumb />
+                        <Button
+                            as={Link}
+                            to="/account/settings"
+                            color="blue"
+                            onClick={setSettingsData}
+                        >
+                            <Icon name="setting" />
+                            {ucfirst(traduceTo(lang, "account_settings_title"))}
+                        </Button>
                         <Text as="h1" textAlign="center">
                             {account.name.charAt(0).toUpperCase() + account.name.slice(1)}
                         </Text>
-                        <Container textAlign="center" className="contains">
+                        <Card.Group centered>
                             {Object.keys(account).map(key => {
                                 if(typeof account[key] === "object" && key !== "type") {
                                     return (
-                                        <Button key={key} as={Link} to={"/account/" + key} labelPosition="left" icon>
-                                            <Icon name="money"/>
-                                            Voir les {key}
-                                        </Button>
+                                        <Card key={key} as={Link} to={"/account/" + key}>
+                                            <Card.Header as={Text} icon>
+                                                {
+                                                (key === "regular_fees") ? (<><Icon name="sync" /> {ucfirst(traduceTo(lang, key))}</>)
+                                                : (key === "expenses") ? (<><Icon name="arrow down" />{ucfirst(traduceTo(lang, key))}</>)
+                                                : (key === "incomings") ? (<><Icon name="arrow up" />{ucfirst(traduceTo(lang, key))}</> )
+                                                : null
+                                                }
+                                            </Card.Header>
+                                            <Card.Content>
+                                                <Text as="p" size="huge" textAlign="center">
+                                                    {account[key].length}
+                                                </Text>
+                                            </Card.Content>
+                                            <Card.Content>
+                                                <Text as="p" size="huge" textAlign="center">
+                                                    {calcTotal(account[key])} €
+                                                </Text>
+                                            </Card.Content>
+                                        </Card>
                                     )
                                 }
+                                return null;
                             })}
-                        </Container>
-                        <Card.Group centered>
-                            <Card key="expenses">
-                                <Card.Header as={Text} icon>
-                                    <Icon name="arrow up" />
-                                    Dépenses
-                                </Card.Header>
-                                <Card.Content>
-                                    <Text as="p" size="huge" textAlign="center">
-                                        {account.expenses.length}
-                                    </Text>
-                                </Card.Content>
-                                <Card.Content>
-                                    <Text as="p" size="huge" textAlign="center">
-                                        {calcTotal(account.expenses)} €
-                                    </Text>
-                                </Card.Content>
-                            </Card>
-                            <Card key="incomings">
-                                <Card.Header as={Text} icon>
-                                    <Icon name="arrow down" />
-                                    Recettes
-                                </Card.Header>
-                                <Card.Content>
-                                    <Text as="p" size="huge" textAlign="center">
-                                        {account.incomings.length}
-                                    </Text>
-                                </Card.Content>
-                                <Card.Content>
-                                    <Text as="p" size="huge" textAlign="center">
-                                        {calcTotal(account.incomings)} €
-                                    </Text>
-                                </Card.Content>
-                            </Card>
-                            <Card key="regular_fees">
-                                <Card.Header as={Text} icon>
-                                    <Icon name="sync" />
-                                    Dépenses régulières
-                                </Card.Header>
-                                <Card.Content>
-                                    <Text as="p" size="huge" textAlign="center">
-                                        {account.regular_fees.length}
-                                    </Text>
-                                </Card.Content>
-                                <Card.Content>
-                                    <Text as="p" size="huge" textAlign="center">
-                                        {calcTotal(account.regular_fees)} €
-                                    </Text>
-                                </Card.Content>
-                            </Card>
                         </Card.Group>
                         <Card centered>
                             <Card.Header as={Text} icon>
@@ -125,9 +126,10 @@ const Account = (props) => {
                             </Card.Content>
                         </Card>
                         <ItemForm accountId={account.id} />
-                    </main>
-                <Footer />
-            </>
+                    </Container>
+                </main>
+            <Footer />
+        </>
         )
     } catch(e) {
         return (

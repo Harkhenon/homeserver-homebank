@@ -26,10 +26,21 @@ const ItemForm = (props) => {
 
   toast.configure();
 
+  /**
+   * Handle form changes and send it to state
+   * @param {object} e Semantic event object
+   * @param {string} name Name of the state variable
+   * @param {string} value Its value
+   */
   const handleChange = (e , { name, value }) => {
       controlFormInput(name, value);
   }
 
+  /**
+   * Handle form submit and send Axios request
+   * to create the moove
+   * @param {object} e 
+   */
   const handleSubmit = e => {
 
     axiosConfigured.post('/api/bank/account/operation', {
@@ -39,20 +50,25 @@ const ItemForm = (props) => {
         moove_description,
         "moove_account_id": accountId,
     })
-    .then(response => {
-      toast.success('Mouvement créé');
-      getAccountsWithTypes();
-      controlFormInput("moove_type", undefined);
-      controlFormInput("moove_name", undefined);
-      controlFormInput("moove_amount", undefined);
-      controlFormInput("moove_description", undefined);
-      controlFormErrors(null);
-    })
-    .catch((error) => {
-      console.error(error);
-    })
+      .then(response => {
+        toast.success('Mouvement créé');
+        getAccountsWithTypes();
+        controlFormInput("moove_type", undefined);
+        controlFormInput("moove_name", undefined);
+        controlFormInput("moove_amount", undefined);
+        controlFormInput("moove_description", undefined);
+        controlFormErrors(null);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
   }
 
+  /**
+   * Get errors from state and build micro component
+   * 
+   * @returns A react element who lists errors
+   */
   const errors = () => {
     form_errors ? (
       <>
