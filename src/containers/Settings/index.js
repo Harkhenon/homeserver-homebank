@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 
 // == Import : local
-import PageBreadcrumb from 'src/components/Parts/PageBreadcrumb';
+import Settings from 'src/components/Settings';
+import { controlFormInput } from 'src/store/reducer';
 
 
 /* === State (données) ===
@@ -17,6 +18,7 @@ const mapStateToProps = (state, ownProps) => ({
     accountsWithTypes: state.accountsWithTypes ?? null,
     currentAccount: state.currentAccount ?? null,
     lang: state.lang ?? null,
+    name: state.name ?? null,
 });
 
 
@@ -28,23 +30,24 @@ const mapStateToProps = (state, ownProps) => ({
 * Pas de disptach à transmettre ? const mapDispatchToProps = {};
 */
 const mapDispatchToProps = (dispatch, ownProps) => ({
+    controlFormInput: (name, value) => (dispatch(controlFormInput(name, value))),
 });
 
 
 // Container
-const PageBreadcrumbContainer = connect(
+const SettingsContainer = connect(
 mapStateToProps,
 mapDispatchToProps,
-)(PageBreadcrumb);
+)(Settings);
 
 
 // == Export
-export default PageBreadcrumbContainer;
+export default SettingsContainer;
 
 
 /* = export à la volée
 export default connect(
 mapStateToProps,
 mapDispatchToProps,
-)(PageBreadcrumb);
+)(Settings);
 */

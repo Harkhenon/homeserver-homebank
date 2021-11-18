@@ -29,6 +29,7 @@ const mapStateToProps = (state, ownProps) => ({
     currentMoove: state.currentMoove ?? null,
     currentMooveId: state.currentMooveId ?? null,
     loading: state.loading ?? null,
+    lang: state.lang ?? null,
 });
 
 
