@@ -25,6 +25,7 @@ const mapStateToProps = (state, ownProps) => ({
     moove_description: state.moove_description ?? "",
     form_errors: state.form_errors ?? null,
     accountsWithTypes: state.accountsWithTypes ?? null,
+    lang: state.lang ?? null,
 });
 
 

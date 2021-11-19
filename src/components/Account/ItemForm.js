@@ -9,6 +9,8 @@ import {
 import PropTypes from 'prop-types';
 
 import { axiosConfigured } from 'src/store';
+import { ucfirst } from 'src/utility/PolyfillPhp';
+import { traduceTo } from 'src/i18n/Internationalization';
 
 const ItemForm = (props) => {
 
@@ -22,6 +24,7 @@ const ItemForm = (props) => {
     form_errors,
     accountId,
     getAccountsWithTypes,
+    lang
   } = props;
 
   toast.configure();
@@ -90,7 +93,7 @@ const ItemForm = (props) => {
           <Card.Content>
             <Card.Header>
               <Text as="h1">
-                Ajouter une opération
+                {ucfirst(traduceTo(lang, "add_operation"))}
               </Text>
             </Card.Header>
           </Card.Content>
@@ -98,7 +101,7 @@ const ItemForm = (props) => {
             { form_errors && (
               <Message negative>
                 <Message.Header>
-                  Erreur:
+                  {ucfirst(traduceTo(lang, "error"))}:
                 </Message.Header>
                   {errors()}
               </Message>
@@ -106,13 +109,13 @@ const ItemForm = (props) => {
             <Form onSubmit={handleSubmit}>
               <Form.Dropdown
                 onChange={handleChange}
-                label="Mouvements"
-                placeholder="Selectionnez un mouvement"
+                label={ucfirst(traduceTo(lang, "mooves"))}
+                placeholder={ucfirst(traduceTo(lang, "select_mooves"))}
                 name="moove_type"
                 options={[
-                    { key: "expenses", value: "expenses", text: "Dépense" },
-                    { key: "regular_fees", value: "regular_fees", text: "Dépense régulière" },
-                    { key: "incomings", value: "incomings", text: "Recette" },
+                    { key: "expenses", value: "expenses", text: ucfirst(traduceTo(lang, "expenses"))},
+                    { key: "regular_fees", value: "regular_fees", text: ucfirst(traduceTo(lang, "regular_fees")) },
+                    { key: "incomings", value: "incomings", text: ucfirst(traduceTo(lang, "incomings")) },
                 ]}
                 value={moove_type ?? ""}
                 />
@@ -120,26 +123,26 @@ const ItemForm = (props) => {
                 type="number"
                 name="moove_amount"
                 value={moove_amount ?? ""}
-                label="Montant de l'opération"
+                label={ucfirst(traduceTo(lang, "operation_amount"))}
                 onChange={handleChange}
               />
               <Form.Input 
                 type="text"
                 name="moove_name"
                 value={moove_name ?? ""}
-                label="Libellé de l'opération"
+                label={ucfirst(traduceTo(lang, "operation_label"))}
                 onChange={handleChange}
               />
               <Form.TextArea
                 name="moove_description"
                 value={moove_description ?? ""}
-                label="Commentaire"
+                label={ucfirst(traduceTo(lang, "operation_comment"))}
                 onChange={handleChange}
               />
               <Card.Content extra>
                 <Form.Button
                   type="submit"
-                  content="Ajouter"
+                  content={ucfirst(traduceTo(lang, "add"))}
                   icon="plus"
                 />
               </Card.Content>

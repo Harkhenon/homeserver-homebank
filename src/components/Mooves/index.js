@@ -98,7 +98,7 @@ const Mooves = (props) => {
                                                             icon
                                                         >
                                                             <Icon name="edit" />
-                                                            Modifier
+                                                            {ucfirst(traduceTo(lang, "update"))}
                                                         </Button>
                                                         <Button
                                                             type="button"
@@ -111,7 +111,7 @@ const Mooves = (props) => {
                                                             icon
                                                         >
                                                             <Icon name="delete" />
-                                                            Supprimer
+                                                            {ucfirst(traduceTo(lang, "delete"))}
                                                         </Button>
                                                     </Button.Group>
                                                 </Segment>
