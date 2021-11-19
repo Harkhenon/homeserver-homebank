@@ -29,6 +29,7 @@ const mapStateToProps = (state, ownProps) => ({
     amount: state.amount ?? null,
     comment: state.comment ?? null,
     loading: state.loading ?? null,
+    lang: state.lang ?? null,
 });
 
 

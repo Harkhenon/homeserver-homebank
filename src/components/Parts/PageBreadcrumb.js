@@ -18,46 +18,49 @@ const PageBreadcrumb = (props) => {
     // On supprime la première entrée qui correspond toujours à
     // une chaîne de caractère vide
     urlInArray.shift();
-
-    console.log(urlInArray.length, urlInArray[0])
     
+
+
     // On map le resutat pour construire notre fil d'Ariane
     return (
-        <Breadcrumb key="breadcrumb">
-            <Breadcrumb.Section key="section-home">
-                <Link to="/">
-                    Accueil
-                </Link>
-            </Breadcrumb.Section>
-                {(urlInArray[0] !== "") &&
-                    urlInArray.map((element, index, baseArray) => {
-                        return (
-                            <>
-                                {baseArray[index + 1] !== undefined && (
+        <>
+            {urlInArray[0] !== "" && (
+                <Breadcrumb key="breadcrumb">
+                    <Breadcrumb.Section key="section-home">
+                        <Link to="/">
+                            Accueil
+                        </Link>
+                    </Breadcrumb.Section>
+                            {urlInArray.map((element, index, baseArray) => {
+                                return (
                                     <>
-                                        <Breadcrumb.Divider icon="arrow right" key={`divider-${index}`} />
-                                        <Breadcrumb.Section key={`section-${index}`}>
-                                            
-                                                <Link to={"/" + element}>
-                                                    {ucfirst(traduceTo(lang, element))}
-                                                </Link>
-                                        </Breadcrumb.Section>
+                                        {baseArray[index + 1] !== undefined && (
+                                            <>
+                                                <Breadcrumb.Divider icon="arrow right" key={`divider-${index}`} />
+                                                <Breadcrumb.Section key={`section-${index}`}>
+                                                    
+                                                        <Link to={"/" + element}>
+                                                            {ucfirst(traduceTo(lang, element))}
+                                                        </Link>
+                                                </Breadcrumb.Section>
+                                            </>
+                                        )}
+                                        {baseArray[index + 1] === undefined && (                                    <>
+                                                <Breadcrumb.Divider icon="arrow right" key={`divider-${index}`} />
+                                                <Breadcrumb.Section key={`section-${index}`}>
+                                                        <span>
+                                                            {ucfirst(traduceTo(lang, element))}
+                                                        </span>
+                                                </Breadcrumb.Section>
+                                            </>
+                                        )}
                                     </>
-                                )}
-                                {baseArray[index + 1] === undefined && (                                    <>
-                                        <Breadcrumb.Divider icon="arrow right" key={`divider-${index}`} />
-                                        <Breadcrumb.Section key={`section-${index}`}>
-                                                <span>
-                                                    {ucfirst(traduceTo(lang, element))}
-                                                </span>
-                                        </Breadcrumb.Section>
-                                    </>
-                                )}
-                            </>
-                        )
-                    })
-                }
-        </Breadcrumb>
+                                )
+                            })
+                        }
+                </Breadcrumb>
+            )}
+        </>
     )
 }
 

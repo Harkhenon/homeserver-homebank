@@ -14,6 +14,7 @@ const SET_CURRENT_MOOVE_ID = "SET_CURRENT_MOOVE_ID";
 const CONTROL_FORM_INPUT = "CONTROL_FORM_INPUT";
 const CONTROL_FORM_ERRORS = "CONTROL_FORM_ERRORS";
 const TOGGLE_LOADING = "TOGGLE_LOADING";
+const SELECT_LANG = "SELECT_LANG";
 
 const reducer = (state = initialState, action = {}) => {
     switch (action.type) {
@@ -69,6 +70,12 @@ const reducer = (state = initialState, action = {}) => {
                 loading: !state.loading,
             }
         }
+        case SELECT_LANG: {
+            return {
+                ...state,
+                lang: action.lang,
+            }
+        }
         default: {
             return state;
         }
@@ -113,5 +120,10 @@ export const toggleVisibility = () => ({
 export const toggleLoading = () => ({
     type: TOGGLE_LOADING,
 })
+
+export const selectLang = (lang) => ({
+    type: SELECT_LANG,
+    lang
+}); 
 
 export default reducer;

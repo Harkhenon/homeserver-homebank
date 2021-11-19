@@ -11,6 +11,8 @@ import {toast, ToastContainer } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 import { axiosConfigured } from 'src/store';
+import { ucfirst } from 'src/utility/PolyfillPhp';
+import { traduceTo } from 'src/i18n/Internationalization';
 import './sass/Mooves.scss';
 
 const MooveModalEdit = (props) => {
@@ -30,7 +32,8 @@ const MooveModalEdit = (props) => {
         getAccountsWithTypes,
         setCurrentMoove,
         toggleLoading,
-        loading
+        loading,
+        lang
     } = props;
     
     const moove = accountsWithTypes[currentAccount][type][currentMoove];
@@ -81,40 +84,39 @@ const MooveModalEdit = (props) => {
                     closeIcon
                 >
                     <Modal.Header>
-                        Modifier un mouvement
+                        {ucfirst(traduceTo(lang, "update_moove"))}
                     </Modal.Header>
                     <Modal.Content>
                         <Form onSubmit={handleSubmit} id="edit-moove-form">
                             <Form.Field required>
-                                <label>Nom du mouvement</label>
+                                <label>{ucfirst(traduceTo(lang, "moove_name"))}</label>
                                 <Input
                                     type="text"
                                     name="name"
                                     value={name ?? ""}
-                                    placeholder="Nom du mouvement"
+                                    placeholder={ucfirst(traduceTo(lang, "moove_name"))}
                                     onChange={handleChange}
                                     fluid
                                 />
                             </Form.Field>
                             <Form.Field required>
-                                <label>Montant</label>
+                                <label>{ucfirst(traduceTo(lang, "moove_amount"))}</label>
                                 <Input
                                     type="number"
                                     step="any"
                                     name="amount"
                                     value={amount ?? ""}
-                                    placeholder="Montant du mouvement"
+                                    placeholder={ucfirst(traduceTo(lang, "moove_amount"))}
                                     onChange={handleChange}
                                     fluid
                                 />
                             </Form.Field>
                             <Form.Field required>
-                                <label>Commentaire</label>
+                                <label>{ucfirst(traduceTo(lang, "moove_comment"))}</label>
                                 <TextArea
-                                    //type="text"
                                     name="comment"
                                     value={comment ?? ""}
-                                    placeholder="Commentaire"
+                                    placeholder={ucfirst(traduceTo(lang, "moove_comment"))}
                                     onChange={handleChange}
                                 />
                             </Form.Field>
@@ -128,7 +130,7 @@ const MooveModalEdit = (props) => {
                             loading={loading}
                             disabled={loading}
                         >
-                            Mettre à jour
+                            {ucfirst(traduceTo(lang, "update"))}
                         </Button>
                     </Modal.Actions>
                 </Modal>

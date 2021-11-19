@@ -7,6 +7,7 @@ import Home from 'src/components/Home';
 import {
     getAccountsWithTypes,
     setCurrentAccount,
+    controlFormInput
 } from 'src/store/reducer';
 
 /* === State (données) ===
@@ -20,6 +21,7 @@ const mapStateToProps = (state, ownProps) => ({
     accountsWithTypes: state.accountsWithTypes ?? null,
     currentAccount: state.currentAccount ?? null,
     lang: state.lang ?? null,
+    select_month: state.select_month ?? null,
 });
 
 
@@ -33,6 +35,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getAccountsWithTypes: (accountsWithTypes) => (dispatch(getAccountsWithTypes(accountsWithTypes))),
     setCurrentAccount: (currentAccount) => (dispatch(setCurrentAccount(currentAccount))),
+    controlFormInput: (name, value) => (dispatch(controlFormInput(name, value))),
 });
 
 
